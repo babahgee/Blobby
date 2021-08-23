@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Simulation profit",
+    "uniqueID": "simdetails-item-sim_profit",
+    "value": "0,00"
+  },
+  {
+    "name": "Income p/s",
+    "uniqueID": "simdetails-item-sim_income_ps",
+    "value": "0,00"
+  },
+  {
+    "name": "Average happiness",
+    "uniqueID": "simdetails-item-sim_averagehappiness",
+    "value": 50
+  },
+  {
+    "name": "Time",
+    "uniqueID": "simdetails-item-sim_time",
+    "value": "12:00"
+  },
+  {
+    "name": "Date",
+    "uniqueID": "simdetails-item-sim_date",
+    "value": "Year 1"
+  },
+  {
+    "name": "Genders",
+    "uniqueID": "simdetails-item-sim_genders",
+    "value": 2
+  }
+]

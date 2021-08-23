@@ -1,0 +1,137 @@
+.app-titlebar {
+    width: 100vw;
+    height: 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #1d1d1d;
+    z-index: 99999 !important;
+    user-select: none;
+}
+
+.app-titlebar-region-drag {
+    width: calc(100% - 120px);
+    height: 100%;
+    float: left;
+    -webkit-app-region: drag;
+}
+
+.app-titlebar-title {
+    width: auto;
+    height: auto;
+    float: left;
+    margin-top: 6px;
+    margin-left: 20px;
+    cursor: grab;
+}
+
+    .app-titlebar-title span {
+        font-family: Montserrat;
+        color: #fff;
+        font-size: 15px;
+        text-transform: uppercase;
+    }
+
+.app-titlebar-big-hl {
+    width: 100px;
+    height: 1px;
+    float: left;
+    margin-left: 20px;
+    background: #444444;
+    margin-top: 14px;
+}
+
+.app-titlebar-appinfo {
+    width: auto;
+    height: auto;
+    float: left;
+    margin-left: 20px;
+    margin-top: 5px;
+}
+
+    .app-titlebar-appinfo span {
+        font-family: RobotoLight;
+        font-size: 12px;
+        color: #888;
+    }
+
+        .app-titlebar-appinfo span b {
+            padding: 3px 8px;
+            background: #fa4040;
+            border-radius: 5px;
+            margin-left: 10px;
+            margin-right: 10px;
+            font-family: 'Montserrat';
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+.app-titlebar-controls {
+    width: auto;
+    height: auto;
+    float: right;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+
+.app-titlebar-controls-control {
+    width: 10px;
+    height: 10px;
+    float: right;
+    background: none;
+    padding: 7px;
+    cursor: pointer;
+    position: relative;
+    content: "";
+    margin-left: 10px;
+}
+
+    .app-titlebar-controls-control:before, .app-titlebar-controls-control:after {
+        position: absolute;
+        content: "";
+    }
+
+    .app-titlebar-controls-control.control-close:before, .app-titlebar-controls-control.control-close:after {
+        width: 12px;
+        height: 1px;
+        top: 50%;
+        left: 6px;
+        background: #bfbfbf;
+    }
+
+    .app-titlebar-controls-control.control-close:before {
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+
+    .app-titlebar-controls-control.control-close:after {
+        -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+    }
+
+    .app-titlebar-controls-control.control-close:hover {
+        background: #fa4040;
+    }
+
+
+    .app-titlebar-controls-control.control-windowed:before {
+        width: 7px;
+        height: 7px;
+        inset: 0;
+        margin: auto;
+        border: 1px solid #bfbfbf;
+    }
+
+    .app-titlebar-controls-control.control-minimize:before {
+        width: 10px;
+        height: 1px;
+        inset: 0;
+        margin: auto;
+        background: #bfbfbf;
+    }

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <!-- Default configurations -->
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="title" content="Blobby">
+    <meta name="description" content="A simulation showing social behavior of self-made AI.">
+    <meta name="author" content="©Blobby">
+    <meta name="theme-color" content="#fff">
+    <meta itemprop="name" content="Blobby">
+    <meta itemprop="description" content="A simulation showing social behavior of self-made AI.">
+
+    <!-- Twitter meta configurations. -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Blobby">
+    <meta name="twitter:description" content="A simulation showing social behavior of self-made AI.">
+    <meta name="twitter:site" content="@Blobby">
+    <meta name="twitter:creator" content="@Blobby">
+
+    <!-- OG meta configurations.  -->
+    <meta property="og:title" content="Blobby">
+    <meta property="og:description" content="A simulation showing social behavior of self-made AI.">
+    <meta property="og:image:width" content="100">
+    <meta property="og:image:height" content="100">
+    <meta property="og:site_name" content="Blobby">
+    <meta property="og:locale" content="en_EN">
+
+    <!--<title>Blobby</title>-->
+
+    <link href="data/fonts/index.css" rel="stylesheet" type="text/css" />
+
+    <link href="./styles/main.css" type="text/css" rel="stylesheet" />
+    <link href="./styles/titlebar.css" type="text/css" rel="stylesheet" />
+    <link href="./styles/settings.css" type="text/css" rel="stylesheet" />
+    <link href="./styles/simdetails.css" type="text/css" rel="stylesheet" />
+    <link href="./styles/minimap.css" type="text/css" rel="stylesheet" />
+    <link href="./styles/loader.css" type="text/css" rel="stylesheet" />
+    <link href="./styles/overlay.css" type="text/css" rel="stylesheet" />
+
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/brands.min.css" integrity="sha512-apX8rFN/KxJW8rniQbkvzrshQ3KvyEH+4szT3Sno5svdr6E/CP0QE862yEeLBMUnCqLko8QaugGkzvWS7uNfFQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/svg-with-js.min.css" integrity="sha512-W3ZfgmZ5g1rCPFiCbOb+tn7g7sQWOQCB1AkDqrBG1Yp3iDjY9KYFh/k1AWxrt85LX5BRazEAuv+5DV2YZwghag==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+    <div class="app-titlebar electron-titlebar desktop-permission">
+        <div class="container">
+
+            <div class="app-titlebar-region-drag">
+                <div class="app-titlebar-title">
+                    <span>Blobby</span>
+                </div>
+
+                <div class="app-titlebar-big-hl"></div>
+
+                <div class="app-titlebar-appinfo">
+                    <span>Version 0.1.3 <b>beta</b></span>
+                </div>
+            </div>
+
+            <div class="app-titlebar-controls">
+                <div class="app-titlebar-controls-control control-close"></div>
+                <div class="app-titlebar-controls-control control-windowed"></div>
+                <div class="app-titlebar-controls-control control-minimize"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="app electron-app simulation main-simulation js-enabled css-enabled desktop-permission">
+        <div class="container">
+            <!-- App contents -->
+
+
+            <!-- Graphic filters -->
+            <svg>
+                <defs>
+                    <filter id="goo">
+                        <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="40" id="myFilter" />
+                        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 120 -10" result="goo"></feColorMatrix>
+                        <feBlend in="SourceGraphic" in2="goo"></feBlend>
+                    </filter>
+                </defs>
+            </svg>
+
+            <!-- Overlays -->
+            <div class="app-overlays">
+
+                <div class="app-overlay overlay-in_performance_dashboard">
+                    <div class="container">
+
+                        <div class="app-overlay-textcontainer">
+                            <h1>Simulation <b>paused</b> while being in any sub-window</h1>
+                            <h4>Close all sub-windows to continue the simulation</h4>
+                        </div>
+
+                        <div class="app-overlay-spinner"></div>
+
+                        <div class="app-overlay-footer">
+                            <div class="container">
+
+                                <div class="app-overlay-footer-text">
+                                    <span>What to do if the simulation is stuck on this overlay? Simple: go cry lol. Just kidding, restart the application or see the taskmanager and close all windows of this application.</span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Main app loader -->
+            <div class="app-loader">
+                <div class="container">
+                    <!-- Loader contents -->
+
+                    <div class="loader-textcontainer">
+                        <div class="container">
+                            <div class="loader-textcontainer-title">
+                                <span>Blobby</span>
+                            </div>
+                            <div class="loader-textcontainer-hl"></div>
+                            <div class="loader-textcontainer-splash">
+                                <span>Setting up simulation environment...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="loader-footer">
+                        <div class="container">
+
+                            <div class="loader-footer-text">
+                                <span>Blobby by <a href="https://github.com/babahgee">Rohan Kanhaisingh</a> | Open-source project | Mostly writtin in Javascript.</span>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Main GUI container -->
+            <div class="app-gui">
+                <div class="container">
+
+                    <!-- Simulation details -->
+                    <div class="app-gui-simdetails hidden">
+                        <div class="container">
+
+                            <div class="simdetails-navbar">
+                                <div class="simdetails-navbar-title">
+                                    <span>Sim overview</span>
+                                </div>
+                                <div class="simdetails-navbar-button close"></div>
+                            </div>
+
+                            <div class="simdetails-simtitle">
+                                <span contenteditable="true" spellcheck="false" autocomplete="false">Ayo! the pizza here</span>
+                            </div>
+
+                            <div class="simdetails-items"></div>
+
+                        </div>
+                    </div>
+
+
+                    <!-- Debug container -->
+                    <div class="app-gui-debug hidden">
+                        <div class="debug-item gui-fps_meter">
+                            <span>FPS: 0</span>
+                        </div>
+                        <div class="debug-item gui-delta_time">
+                            <span>Delta time: 0</span>
+                        </div>
+                        <div class="debug-item gui-render_delay">
+                            <span>Render delay: 0</span>
+                        </div>
+                        <div class="debug-item gui-renderobjects_length">
+                            <span>Render objects: 0</span>
+                        </div>
+                        <div class="debug-item gui-visible_objects">
+                            <span>Visible objects: 0</span>
+                        </div>
+                        <div class="debug-item gui-render_scale">
+                            <span>Render scale: 1 - 1</span>
+                        </div>
+                        <div class="debug-item gui-render_offset">
+                            <span>Render offset: 0 - 0</span>
+                        </div>
+                        <div class="debug-item gui-mouse_coords">
+                            <span>Mouse: 0 - 0</span>
+                        </div>
+                    </div>
+
+                    <!-- Bubble buttons -->
+                    <div class="app-gui-bubblebuttons">
+                        <div class="container">
+
+                            <div class="bubblebuttons-button" tooltip="Spawn menu">
+                                <div class="bubblebuttons-button-icon">
+                                    <img src="./data/images/icons/icon_bucket.png" />
+                                </div>
+                                <div class="bubblebuttons-button-text">
+                                    <span>Spawn menu</span>
+                                </div>
+                            </div>
+                            <div class="bubblebuttons-button" tooltip="App performance" action="app:open-desktop-performance">
+                                <div class="bubblebuttons-button-icon">
+                                    <img src="./data/images/icons/icon_dashboard.png" />
+                                </div>
+                                <div class="bubblebuttons-button-text">
+                                    <span>App performance</span>
+                                </div>
+                            </div>
+                            <div class="bubblebuttons-button bubblebutton-button-settings" tooltip="Simulation settings">
+                                <div class="bubblebuttons-button-icon">
+                                    <img src="./data/images/icons/icon_cog.png" />
+                                </div>
+                                <div class="bubblebuttons-button-text">
+                                    <span>Settings</span>
+                                </div>
+                            </div>
+                            <div class="bubblebuttons-button bubblebutton-button-simoverview" tooltip="Simulation overview">
+                                <div class="bubblebuttons-button-icon">
+                                    <img src="./data/images/icons/icon_cube.png" style="-moz-transform: scale(1.5); -ms-transform: scale(1.5); -o-transform: scale(1.5); -webkit-transform: scale(1.5); transform: scale(1.5);" />
+                                </div>
+                                <div class="bubblebuttons-button-text">
+                                    <span>Simulation overview</span>
+                                </div>
+                            </div>
+                            <div class="bubblebuttons-button" tooltip="Entity overview">
+                                <div class="bubblebuttons-button-icon">
+                                    <img src="./data/images/icons/icon_people.png" />
+                                </div>
+                                <div class="bubblebuttons-button-text">
+                                    <span>Entities overview</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Simulation minimap -->
+                    <div class="app-minimap">
+                        <div class="container">
+
+                            <canvas class="app-minimap-canvas"></canvas>
+
+                        </div>
+                    </div>
+
+                    <!-- GUI Settings -->
+                    <div class="app-gui-settings hidden">
+                        <div class="container">
+                            <!-- Settings content -->
+
+                            <!-- Settings navbar -->
+                            <div class="gui-settings-navbar">
+                                <div class="container">
+
+                                    <!-- Navbar title -->
+                                    <div class="gui-settings-navbar-title">
+                                        <span>settings</span>
+                                    </div>
+
+                                    <!-- Navbar close button-->
+                                    <div class="gui-settings-navbar-button button-close"></div>
+
+                                </div>
+                            </div>
+
+                            <!-- Main content of settings -->
+                            <div class="gui-settings-content">
+
+                                <!-- Main global simulation options-->
+                                <div class="gui-settings-group" group-name="Global Simulation Options">
+
+                                    <!-- Settings item for debug container-->
+                                    <div class="gui-settings-item">
+                                        <div class="gui-settings-item-title">
+                                            <span>Debug container</span>
+                                        </div>
+                                        <div class="gui-settings-item-toggle active"></div>
+                                    </div>
+
+                                    <!-- Settings item for dark mode -->
+                                    <div class="gui-settings-item">
+                                        <div class="gui-settings-item-title">
+                                            <span>Dark mode</span>
+                                        </div>
+                                        <div class="gui-settings-item-toggle"></div>
+                                    </div>
+
+                                    <!-- Disable or enable vsync -->
+                                    <div class="gui-settings-item">
+                                        <div class="gui-settings-item-title">
+                                            <span>Use v-sync</span>
+                                        </div>
+                                        <div class="gui-settings-item-toggle"></div>
+                                    </div>
+
+                                    <!-- Simulation arguments -->
+                                    <div class="gui-settings-item">
+                                        <div class="gui-settings-item-title">
+                                            <span>Simulation arguments</span>
+                                        </div>
+                                        <div class="gui-settings-item-input" contenteditable="true" spellcheck="false" autocomplete="false" name="sm_args"></div>
+                                    </div>
+
+                                    <div class="gui-settings-loader sim-settings-saves-initloader">
+                                        <div class="gui-settings-loader-spinner"></div>
+                                        <div class="gui-settings-loader-text">
+                                            <span>Loading previous saves</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Simulation styles -->
+                                <div class="gui-settings-group gui-settings-group-backgroundimages" group-name="Simulation Background">
+
+                                    <!-- Loader that indicates images being loaded -->
+                                    <div class="gui-settings-loader sim-settings-bg-initloader">
+                                        <div class="gui-settings-loader-spinner"></div>
+                                        <div class="gui-settings-loader-text">
+                                            <span>Loading images</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="gui-settings-group-images">
+
+                                    </div>
+
+                                    <div class="gui-settings-button" action="sm_openbgdir">
+                                        <span>open directory</span>
+                                    </div>
+
+                                    <div class="gui-settings-button" action="sm_bgreset">
+                                        <span>reset background</span>
+                                    </div>
+
+                                </div>
+
+                                <!-- Entity renderings options-->
+                                <div class="gui-settings-group" group-name="Entity Renderings Options">
+
+                                    <div class="gui-settings-item">
+                                        <div class="gui-settings-item-title">
+                                            <span>Boundary</span>
+                                        </div>
+                                        <div class="gui-settings-item-toggle" setting-object-name="entityRenderOptions" setting-property="showBoundary"></div>
+                                    </div>
+
+                                    <div class="gui-settings-item">
+                                        <div class="gui-settings-item-title">
+                                            <span>Gravity</span>
+                                        </div>
+                                        <div class="gui-settings-item-toggle" setting-object-name="entityRenderOptions" setting-property="useGravity"></div>
+                                    </div>
+
+                                    <div class="gui-settings-item">
+                                        <div class="gui-settings-item-title">
+                                            <span>Shadows</span>
+                                        </div>
+                                        <div class="gui-settings-item-toggle" setting-object-name="entityRenderOptions" setting-property="useShadows"></div>
+                                    </div>
+                                </div>
+
+                                <!-- AI Controller options-->
+                                <div class="gui-settings-group" group-name="AI Controller Options">
+
+                                    <div class="gui-settings-item">
+                                        <div class="gui-settings-item-title">
+                                            <span>Debug</span>
+                                        </div>
+                                        <div class="gui-settings-item-toggle" setting-object-name="aiControllerOptions" setting-property="debug"></div>
+                                    </div>
+
+                                    <div class="gui-settings-item">
+                                        <div class="gui-settings-item-title">
+                                            <span>Show Animation Frame</span>
+                                        </div>
+                                        <div class="gui-settings-item-toggle active" setting-object-name="aiControllerOptions" setting-property="showAnimationFrame"></div>
+                                    </div>
+
+                                    <div class="gui-settings-item">
+                                        <div class="gui-settings-item-title">
+                                            <span>Show Direction</span>
+                                        </div>
+                                        <div class="gui-settings-item-toggle active" setting-object-name="aiControllerOptions" setting-property="showDirection"></div>
+                                    </div>
+
+                                    <div class="gui-settings-item">
+                                        <div class="gui-settings-item-title">
+                                            <span>Show Direction Distance</span>
+                                        </div>
+                                        <div class="gui-settings-item-toggle active" setting-object-name="aiControllerOptions" setting-property="showDirectionDistance"></div>
+                                    </div>
+
+                                    <div class="gui-settings-item">
+                                        <div class="gui-settings-item-title">
+                                            <span>Show End Destination</span>
+                                        </div>
+                                        <div class="gui-settings-item-toggle active" setting-object-name="aiControllerOptions" setting-property="showEndDestination"></div>
+                                    </div>
+
+                                    <div class="gui-settings-item">
+                                        <div class="gui-settings-item-title">
+                                            <span>Update AI In Render View</span>
+                                        </div>
+                                        <div class="gui-settings-item-toggle" setting-object-name="aiControllerOptions" setting-property="updateAIInRenderView"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Spawn menu-->
+                                <div class="gui-settings-group" group-name="Spawn menu">
+
+                                    <div class="gui-settings-item">
+                                        <div class="gui-settings-item-title">
+                                            <span>Amount of entities</span>
+                                        </div>
+                                        <div class="gui-settings-item-input" contenteditable="true" spellcheck="false" autocomplete="false" name="sm_entityLength">10</div>
+                                    </div>
+
+                                    <div class="gui-settings-item">
+                                        <div class="gui-settings-item-title">
+                                            <span>Spawn x-coordinate</span>
+                                        </div>
+                                        <div class="gui-settings-item-input" contenteditable="true" spellcheck="false" autocomplete="false" name="sm_entitySpawnX">$center</div>
+                                    </div>
+
+                                    <div class="gui-settings-item">
+                                        <div class="gui-settings-item-title">
+                                            <span>Spawn y-coordinate</span>
+                                        </div>
+                                        <div class="gui-settings-item-input" contenteditable="true" spellcheck="false" autocomplete="false" name="sm_entitySpawnY">$center</div>
+                                    </div>
+
+                                    <div class="gui-settings-item">
+                                        <div class="gui-settings-item-title">
+                                            <span>Min size</span>
+                                        </div>
+                                        <div class="gui-settings-item-input" contenteditable="true" spellcheck="false" autocomplete="false" name="sm_entitiyMinSize">5</div>
+                                    </div>
+
+                                    <div class="gui-settings-item">
+                                        <div class="gui-settings-item-title">
+                                            <span>Max size</span>
+                                        </div>
+                                        <div class="gui-settings-item-input" contenteditable="true" spellcheck="false" autocomplete="false" name="sm_entitiyMaxSize">10</div>
+                                    </div>
+
+                                    <div class="gui-settings-item">
+                                        <div class="gui-settings-item-title">
+                                            <span>Min movement speed</span>
+                                        </div>
+                                        <div class="gui-settings-item-input" contenteditable="true" spellcheck="false" autocomplete="false" name="sm_entityMinMovSpeed">1</div>
+                                    </div>
+
+                                    <div class="gui-settings-item">
+                                        <div class="gui-settings-item-title">
+                                            <span>Max movement speed</span>
+                                        </div>
+                                        <div class="gui-settings-item-input" contenteditable="true" spellcheck="false" autocomplete="false" name="sm_entityMaxMovSpeed">20</div>
+                                    </div>
+
+                                    <div class="gui-settings-item">
+                                        <div class="gui-settings-item-title">
+                                            <span>Gender</span>
+                                        </div>
+                                        <div class="gui-settings-item-input" contenteditable="true" spellcheck="false" autocomplete="false" name="sm_entityGender"></div>
+                                    </div>
+
+                                    <div class="gui-settings-item">
+                                        <div class="gui-settings-item-title">
+                                            <span>Group name</span>
+                                        </div>
+                                        <div class="gui-settings-item-input" contenteditable="true" spellcheck="false" autocomplete="false" name="sm_entitiyGroupName"></div>
+                                    </div>
+
+                                    <div class="gui-settings-item">
+                                        <div class="gui-settings-item-title">
+                                            <span>Color</span>
+                                        </div>
+                                        <div class="gui-settings-item-input" contenteditable="true" spellcheck="false" autocomplete="false" name="sm_entityColor">$random</div>
+                                    </div>
+
+                                    <div class="gui-settings-button" action="sm_select_range" requires="sm_entitySpawnX, sm_entitySpawnY" get="text from $required_elements">
+                                        <span>select range</span>
+                                    </div>
+
+                                    <div class="gui-settings-button" action="sm_spawnentities" requires="sm_entityLength, sm_entitiyMinSize, sm_entitiyMaxSize, sm_entityMinMovSpeed, sm_entityMaxMovSpeed, sm_entitySpawnX, sm_entitySpawnY, sm_entityGender, sm_entitiyGroupName, sm_entityColor" get="text from $required_elements">
+                                        <span>spawn</span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <canvas class="simulation-renderer"></canvas>
+
+        </div>
+    </div>
+    <script src="js/main.js" type="module"></script>
+</body>
+</html>

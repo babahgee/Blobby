@@ -1,0 +1,15 @@
+{
+	"application": {
+		"verticalSynchronisation": true,
+		"cpuUsageLimitation": null,
+		"maximizeOnStartUp": true,
+		"bruhMode": true
+	},
+	"permissions": {
+		"com.permission.readFiles": true,
+		"com.permission.readTaskManager": true,
+		"com.permission.readProcessorInformation": true,
+		"com.permission.openSubWindows": true,
+		"com.permission.devTools": true
+	}
+}
