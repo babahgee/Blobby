@@ -4,6 +4,7 @@ import { generateUniqueID, getDistance, pd, rb, readFileSync } from "../essentia
 import { canvas, ctx, sceneSize } from "../canvas/renderer.js";
 import { logNormal } from "../essentials/debug.js";
 import { MemoryController } from "./memory-controller.js";
+import { WanderParticle } from "../entities/entity01/particles/wander.js";
 
 // Empty object for global exports.
 const globalExports = {};
@@ -49,12 +50,14 @@ function setNameOnController(controller) {
 }
 
 
+const states = ["wander", "attack"];
+
 export class AIController {
     /**
      * Creates a new AI Controller.
      * @param {Entity} entity
      */
-    constructor(entity) {
+    constructor(entity, options) {
 
         // Make controller unique.
         this.id = generateUniqueID(18);
@@ -75,8 +78,11 @@ export class AIController {
         this.approachedEntity = null;
         this.marriedEntity = null;
 
+        this.killedEntities = 0;
+        this.targetingEntity = null;
+
         // Move speed.
-        this.moveSpeed = rb(1, 10);
+        this.moveSpeed = typeof options.moveSpeed !== "undefined" ? options.moveSpeed : rb(1, 10);
 
         // Animations
         this.animationFrame = 0;
@@ -371,6 +377,8 @@ export class AIController {
 
         // If the direction disance is more than 1.
         if (distance > 1) {
+
+            const randomNumber = rb(0, 10);
 
             // Move entity to direction.
             e.x += (direction.directionX * this.moveSpeed) * secondsPassed;

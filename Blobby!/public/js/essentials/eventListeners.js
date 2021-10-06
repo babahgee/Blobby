@@ -15,6 +15,8 @@ export const mouse = {
     middle: false,
     x: renderOffset.x,
     y: renderOffset.y,
+    sceneX: 0,
+    sceneY: 0,
     canvasX: 0,
     canvasY: 0,
     currentCoordinates: { x: renderOffset.x, y: renderOffset.y },
@@ -144,6 +146,9 @@ window.addEventListener("mousemove", function (event) {
     mouse.x = event.offsetX;
     mouse.y = event.offsetY;
 
+    mouse.sceneX = (mouse.x - renderOffset.x) / renderScale.x;
+    mouse.sceneY = (mouse.y - renderOffset.y) / renderScale.y;
+
     document.querySelector(".gui-mouse_coords span").innerText = `Mouse: ${mouse.x} ${mouse.y}`;
 
     if (mouse.left && keys.lCtrl) {
@@ -188,7 +193,6 @@ function handleScrollAnimation() {
         renderScale.x = (renderScale.x).toFixed(fixedDigits);
         renderScale.y = (renderScale.y).toFixed(fixedDigits);
 
-        //renderOffset.x = -( currentRenderOffsetX + (mouse.x / renderScale.x));
     }
 
     if (renderScale.x < 0.1 && renderScale.y < 0.1) {

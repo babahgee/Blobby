@@ -10,7 +10,7 @@ let activeSocket = null;
 
 function listen(io, bw) {
 
-    console.log("Application started listening on port '5858'...".yellow);
+    console.log("Application started listening on port '8000'...".yellow);
 
     io.sockets.on("connection", function (socket) {
 

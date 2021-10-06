@@ -6,7 +6,7 @@ import "./essentials/bubblebuttons.js";
 import "./canvas/simulationloop.js";
 import "./essentials/settings.js";
 import "./canvas/debug.js";
-import "./canvas/grid.js";
+import "./terrain/grid.js";
 
 import "./essentials/appcontrols.client.js";
 
@@ -32,10 +32,13 @@ buttonActions["sm_spawnentities"] = function (args) {
         gender = args[8],
         color = args[9] === "$random" ? `rgb(${rb(0, 255)}, ${rb(0, 255)}, ${rb(0, 255)})` : args[9];
 
-    let mainSize = rb(minSize, maxSize);
+    let mainSize = rb(minSize, maxSize),
+        mainMoveSpeed = rb(minMovSpeed, maxMovSpeed);
 
     for (let i = 0; i < entityAmount; i++) {
-        new Entity(spawnX, spawnY, mainSize, color);
+        new Entity(spawnX, spawnY, mainSize, color, {
+            moveSpeed: mainMoveSpeed
+        });
     }
 
 }

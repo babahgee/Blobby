@@ -115,7 +115,6 @@ export function RenderSimulation(timeStamp) {
     // Scale canvas based on render scale.
     ctx.scale(renderScale.x, renderScale.y);
 
-
     drawSceneOutlining();
     handleOffscreenDrawing();
 
@@ -123,11 +122,10 @@ export function RenderSimulation(timeStamp) {
 
         const object = renderObjects[i];
 
-        if (typeof object.update == "function") object.update(secondsPassed);
+        if (typeof object.updateMain == "function") object.updateMain(secondsPassed);
     }
 
     update(secondsPassed);
-
 
     ctx.restore();
 

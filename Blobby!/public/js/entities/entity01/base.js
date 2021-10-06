@@ -19,7 +19,7 @@ const entityRenderOptions = {
 const groupNames = ["gunginga", "yankee", "obama", "mahmed-khanakin", "babah-gee"];
 
 export class Entity extends RenderObject {
-    constructor(x, y, size, color) {
+    constructor(x, y, size, color, options) {
         super();
 
         this.x = x;
@@ -32,6 +32,10 @@ export class Entity extends RenderObject {
         this.color = color;
 
         this.isHovering = false;
+
+        this.hoverRange = 200;
+        this.isHoveringInRange = false;
+
         this.isVisible = true;
         this.opacity = 0;
 
@@ -40,7 +44,7 @@ export class Entity extends RenderObject {
 
         this.circles = [];
 
-        for (let i = 0; i < rb(5, Math.round(size)); i++) {
+        for (let i = 0; i < rb(5, 10); i++) {
             this.circles.push({
                 offsetX: rb(-(size / 2), (size / 2)),
                 offsetY: rb(-(size / 2), (size / 2)),
@@ -55,7 +59,7 @@ export class Entity extends RenderObject {
 
         this.health = 100;
 
-        this.aiController = new AIController(this);
+        this.aiController = new AIController(this, options);
 
         this.nameMeasurement = this.aiController.getTextMeasurements();
 
@@ -73,10 +77,15 @@ export class Entity extends RenderObject {
     handleMouseEvents() {
         if (!this.isVisible) return;
 
-        const fixedMouseX = (mouse.x - renderOffset.x) / renderScale.x,
-            fixedMouseY = (mouse.y - renderOffset.y) / renderScale.y;
 
-        this.isHovering = (fixedMouseX > this.x - this.size && fixedMouseX < this.x + this.size && fixedMouseY > this.y - this.size && fixedMouseY < this.y + this.size);
+        this.isHovering = (mouse.sceneX > this.x - this.size && mouse.sceneX < this.x + this.size && mouse.sceneY > this.y - this.size && mouse.sceneY < this.y + this.size);
+
+        this.isHoveringInRange = (
+            mouse.sceneX > this.x - (this.size + this.hoverRange) &&
+            mouse.sceneX < this.x + (this.size + this.hoverRange) &&
+            mouse.sceneY > this.y - (this.size + this.hoverRange) &&
+            mouse.sceneY < this.y + (this.size + this.hoverRange)
+        );
 
     }
     draw(secondsPassed) {
@@ -207,19 +216,12 @@ export class Entity extends RenderObject {
             }
         }
 
-        this.x += this.velX;
-        this.y += this.velY;
+        //this.x += this.velX;
+        //this.y += this.velY;
 
-        if (this.x > -((renderOffset.x + canvas.width) / renderScale.x) &&
-            this.x < -((renderOffset.x - canvas.width) / renderScale.x) &&
-            this.y > -((renderOffset.y + canvas.height)  / renderScale.y) &&
-            this.y < -((renderOffset.y - (canvas.height * 2))) / renderScale.y) {
-
-            this.isVisible = true;
-        } else {
-            this.isVisible = false;
-            this.opacity = 0;
-        }
+        // Update AI Controller.
+        this.handleMouseEvents();
+        this.aiController.update(secondsPassed);
 
         if (this.isVisible) {
             this.draw(secondsPassed);
@@ -227,10 +229,6 @@ export class Entity extends RenderObject {
             this.gui.update();
             this.face.update();
         }
-
-        // Update AI Controller.
-        this.handleMouseEvents();
-        this.aiController.update(secondsPassed);
     }
 }
 

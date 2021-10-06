@@ -2,30 +2,46 @@ const fs = require('fs'),
     request = require('request'),
     progress = require('request-progress'),
     path = require("path"),
-    url = require("url");
+    url = require("url"),
+    downloadRelease = require('@terascope/fetch-github-release'),
+    isDev = require("electron-is-dev");
+
+const user = "babahgee",
+    repo = "Blobby",
+    outputdir = path.join(__dirname, "../../", "test"),
+    leaveZipped = false,
+    disableLogging = false;
+
+// Define a function to filter releases.
+function filterRelease(release) {
+
+    // Filter out prereleases.
+    return release.prerelease === false;
+}
+
+// Define a function to filter assets.
+function filterAsset(asset) {
+    // Select assets that contain the string 'windows'.
+    return asset.name.includes('windows');
+}
 
 
-autoUpdater.setFeedURL({ url: "https://github.com/babahgee/AI-Blob-Simulation" });
+function init() {
 
-autoUpdater.checkForUpdates();
+    if (isDev) return;
 
-autoUpdater.on("checking-for-update", function () {
-    try {
-        dialog.showMessageBox({
-            type: "info",
-            title: "Update available",
-            message: "A new version of this application is available. Do you want to download and install it?",
-            buttons: ["Update application", "Nah, I am good fam"]
+    console.log(true);
+
+    downloadRelease(user, repo, outputdir, filterRelease, filterAsset, leaveZipped, disableLogging)
+        .then(function () {
+            console.log('All done!');
+        })
+        .catch(function (err) {
+            console.error(err.message);
         });
-    } catch (err) {
-        console.log(err.message);
-    }
-});
 
-autoUpdater.on("update-not-available", function () {
+}
 
-});
-
-autoUpdater.on("error", function (err) {
-    console.log(err);
-});
+module.exports = {
+    init: init
+}

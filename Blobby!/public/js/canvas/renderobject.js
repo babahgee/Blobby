@@ -1,4 +1,5 @@
 import { generateUniqueID } from "../essentials/essentials.js";
+import { canvas, renderOffset, renderScale } from "./renderer.js";
 
 /**@type {Array} */
 export const renderObjects = [];
@@ -8,6 +9,8 @@ export class RenderObject {
         this.id = generateUniqueID(18);
         this.creationTimestamp = Date.now();
         this.type = "renderobject";
+
+        this.isVisible = false;
 
         renderObjects.push(this);
     }
@@ -38,5 +41,26 @@ export class RenderObject {
 
             i += 1;
         }
+    }
+    updateMain(secondsPassed) {
+
+
+        if (typeof this.x === "number" && typeof this.y === "number") {
+
+            if (this.x > -((renderOffset.x + canvas.width) / renderScale.x) &&
+                this.x < -((renderOffset.x - canvas.width) / renderScale.x) &&
+                this.y > -((renderOffset.y + canvas.height) / renderScale.y) &&
+                this.y < -((renderOffset.y - (canvas.height * 2))) / renderScale.y) {
+
+                this.isVisible = true;
+
+            } else {
+                this.isVisible = false;
+            }
+
+        }
+
+        this.update(secondsPassed);
+
     }
 }

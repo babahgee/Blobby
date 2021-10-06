@@ -14,16 +14,18 @@
   "scripts": {
     "start": "electron .",
     "start_no_vsync": "electron . --disable-frame-rate-limit",
-    "build": "electron-packager . Blobby! --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Blobby!\"",
-    "install": "npm install express electron socket.io socket.io-client cheerio colors discord-rpc"
+    "build": "electron-packager . Blobby! --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=../release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Blobby!\"",
+    "install": "npm install cheerio colors discord-rpc electron electron-builder electron-is-dev express open-file-explorer os-utils request request-progress socket.io socket.io-client update-electron-app"
   },
   "dependencies": {
+    "@terascope/fetch-github-release": "^0.7.7",
     "cheerio": "^1.0.0-rc.10",
     "colors": "^1.4.0",
     "custom-electron-titlebar": "^3.2.7",
     "discord-rpc": "^4.0.1",
     "electron": "^13.2.1",
     "electron-builder": "^22.11.7",
+    "electron-is-dev": "^2.0.0",
     "express": "^4.17.1",
     "open-file-explorer": "^1.0.0",
     "os-utils": "0.0.14",

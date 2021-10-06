@@ -2,6 +2,7 @@ import { Entity } from "./base.js";
 import { generateUniqueID, pd, rb } from "../../essentials/essentials.js";
 import { ctx, canvas, renderOffset, renderScale } from "../../canvas/renderer.js";
 import { FaceAppearance } from "../main.js";
+import { mouse } from "../../essentials/eventListeners.js";
 
 export class Face extends FaceAppearance {
     /**
@@ -19,7 +20,8 @@ export class Face extends FaceAppearance {
         this.x = entity.x;
         this.y = entity.y;
 
-        this.eyeBallSize = 5;
+        this.eyeBallSize = 2;
+        this.eyeMoveStrength = 3;
 
     }
 
@@ -29,9 +31,8 @@ export class Face extends FaceAppearance {
 
         if (renderScale.x < 0.5 && renderScale.y < 0.5) return;
 
-        let eyeDirection = pd(this.x, this.y, this.aiController.direction.x, this.aiController.direction.y);
+        let eyeDirection = (!this.entity.isHoveringInRange) ? pd(this.x, this.y, this.aiController.direction.x, this.aiController.direction.y) : pd(this.x, this.y, mouse.sceneX, mouse.sceneY);
 
-        let eyeMoveStrength = 3;
 
         ctx.save();
 
@@ -54,10 +55,10 @@ export class Face extends FaceAppearance {
 
         ctx.fillStyle = "#000";
 
-        ctx.arc((this.x - (2 + (this.entity.size / 2))) + eyeDirection.directionX * eyeMoveStrength, (this.y - 2) + eyeDirection.directionY * eyeMoveStrength, 1 + (this.entity.size / 5), 0, 2 * Math.PI);
+        ctx.arc((this.x - (2 + (this.entity.size / 2))) + eyeDirection.directionX * this.eyeMoveStrength, (this.y - 2) + eyeDirection.directionY * this.eyeMoveStrength, 1 + (this.entity.size / 5), 0, 2 * Math.PI);
         ctx.fill();
 
-        ctx.arc((this.x + (2 + (this.entity.size / 2))) + eyeDirection.directionX * eyeMoveStrength, (this.y - 2) + eyeDirection.directionY * eyeMoveStrength, 1 + (this.entity.size / 5), 0, 2 * Math.PI);
+        ctx.arc((this.x + (2 + (this.entity.size / 2))) + eyeDirection.directionX * this.eyeMoveStrength, (this.y - 2) + eyeDirection.directionY * this.eyeMoveStrength, 1 + (this.entity.size / 5), 0, 2 * Math.PI);
         ctx.fill();
 
         ctx.closePath();
@@ -70,8 +71,11 @@ export class Face extends FaceAppearance {
 
         ctx.fillStyle = "#fff";
 
-        ctx.arc(this.x, this.y + (5 + (this.entity.size / 5)), 5 + (this.entity.size / 4), Math.PI, 0, true);
-        //ctx.arc(this.x, this.y + 10, 3, 0, 2 * Math.PI, true);
+        if (this.entity.isHovering) {
+            ctx.arc(this.x, this.y + (10 + (this.entity.size / 5)), 2 + (this.entity.size / 4), 0, 2 * Math.PI, true);
+        } else {
+            ctx.arc(this.x, this.y + (5 + (this.entity.size / 5)), 5 + (this.entity.size / 4), Math.PI, 0, true);
+        }
         ctx.fill();
 
 

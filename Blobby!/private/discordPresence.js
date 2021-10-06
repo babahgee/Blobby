@@ -1,5 +1,6 @@
 const rpc = require("discord-rpc"),
     fs = require("fs"),
+    colors = require("colors"),
     path = require("path");
 
 const { dialog } = require("electron/main");
@@ -17,7 +18,11 @@ function init(configs) {
 
     const client = new rpc.Client({ transport: "ipc" });
 
+    console.log("Initializing Discord-RPC client...".yellow);
+
     client.on("ready", function () {
+
+        console.log("Discord client succesfully initialized!".green);
 
         client.setActivity({
             largeImageKey: "icon_medium",

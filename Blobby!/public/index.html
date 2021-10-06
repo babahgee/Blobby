@@ -120,23 +120,39 @@
                 <div class="container">
                     <!-- Loader contents -->
 
-                    <div class="loader-textcontainer">
+                    <div class="app-loader-background">
                         <div class="container">
-                            <div class="loader-textcontainer-title">
-                                <span>Blobby</span>
+
+                            <div class="app-loader-background-video">
+                                <video src="data/video/background/bg_oil.mp4" autoplay loop volume="0"></video>
                             </div>
-                            <div class="loader-textcontainer-hl"></div>
-                            <div class="loader-textcontainer-splash">
-                                <span>Setting up simulation environment...</span>
-                            </div>
+
                         </div>
                     </div>
 
-                    <div class="loader-footer">
+                    <div class="app-loader-foreground">
                         <div class="container">
 
-                            <div class="loader-footer-text">
-                                <span>Blobby by <a href="https://github.com/babahgee">Rohan Kanhaisingh</a> | Open-source project | Mostly writtin in Javascript.</span>
+                            <div class="loader-textcontainer">
+                                <div class="container">
+                                    <div class="loader-textcontainer-icon">
+                                        <img src="data/images/icons/icon_hq_big.png"/>
+                                    </div>
+                                    <div class="loader-textcontainer-hl"></div>
+                                    <div class="loader-textcontainer-splash">
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="loader-footer">
+                                <div class="container">
+
+                                    <div class="loader-footer-text">
+                                        <span>Blobby by <a href="https://github.com/babahgee">Rohan Kanhaisingh</a> | Open-source project | Mostly writtin in Javascript.</span>
+                                    </div>
+
+                                </div>
                             </div>
 
                         </div>
@@ -171,7 +187,7 @@
 
 
                     <!-- Debug container -->
-                    <div class="app-gui-debug hidden">
+                    <div class="app-gui-debug">
                         <div class="debug-item gui-fps_meter">
                             <span>FPS: 0</span>
                         </div>
@@ -208,6 +224,14 @@
                                 </div>
                                 <div class="bubblebuttons-button-text">
                                     <span>Spawn menu</span>
+                                </div>
+                            </div>
+                            <div class="bubblebuttons-button active" tooltip="Minimap">
+                                <div class="bubblebuttons-button-icon">
+                                    <img src="./data/images/icons/icon_map.png" />
+                                </div>
+                                <div class="bubblebuttons-button-text">
+                                    <span>Minimap</span>
                                 </div>
                             </div>
                             <div class="bubblebuttons-button" tooltip="App performance" action="app:open-desktop-performance">
@@ -247,7 +271,7 @@
                     </div>
 
                     <!-- Simulation minimap -->
-                    <div class="app-minimap">
+                    <div class="app-minimap hidden">
                         <div class="container">
 
                             <canvas class="app-minimap-canvas"></canvas>

@@ -1,6 +1,27 @@
 const globalExports = {};
 
 /* ================= Private functions ================= */
+
+function resolveImage(path) {
+
+    return new Promise(function (resolve, reject) {
+
+        const image = new Image();
+
+        image.src = path;
+
+        image.addEventListener("load", function () {
+            resolve(image);
+        });
+
+        image.addEventListener("abort", function () {
+            reject("");
+        });
+
+    });
+
+}
+
 function resolveFile(path) {
 
     return new Promise(function (resolve, reject) {
@@ -241,6 +262,18 @@ export async function readFileSync(filename) {
     if (typeof filename == "string")
         return await resolveFile(filename);
 
+}
+
+/**
+ * Gets a image file asynchronously
+ * @param {string} path
+ */
+export async function getImage(path) {
+
+    if (typeof path == "string")
+        return await resolveImage(path);
+
+    
 }
 
 /* ================= Other essential thingies ================= */

@@ -1,4 +1,6 @@
-// Import modules.
+
+// ============= Import dev modules =============
+
 const path = require("path"),
     url = require("url"),
     fs = require("fs"),
@@ -6,21 +8,31 @@ const path = require("path"),
     express = require("express"),
     colors = require("colors"),
     io = require("socket.io")(5858),
+    isDev = require("electron-is-dev"),
     package = require("./package.json");
+
+// ============= Import custom modules =============
 
 const handleIO = require("./private/handleIORequests"),
     settings = require("./private/settings"),
     appdata = require("./private/appdata"),
-    discordRPC = require("./private/discordPresence");
+    discordRPC = require("./private/discordPresence"),
+    updater = require("./private/updater");
 
 
 // Get required objects from 'electron' object.
 const { app, BrowserWindow, Menu, screen, autoUpdater, dialog, ipcMain } = electron;
 
+
+// ============= Call init methods =============
+
 const appData = appdata.initialize();
 
 settings.applySettings(appData);
 discordRPC.init(appData);
+// updater.init();
+
+// ============= Main Application =============
 
 // Create empty variable for main window.
 let mainWindow, loader;

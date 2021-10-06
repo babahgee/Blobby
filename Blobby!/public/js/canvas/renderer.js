@@ -10,7 +10,9 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight - 30;
 
 /**@type {CanvasRenderingContext2D} */
-export const ctx = canvas.getContext("2d");
+export const ctx = canvas.getContext("2d", {
+    willReadFrequently: true
+});
 
 /**@type {number} */
 export let backgroundColor = "#fff";
